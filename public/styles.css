@@ -66,6 +66,9 @@ body {
 
 #nickname-display {
   margin-top: 10px; 
+  font-style: italic;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: small;
 }
 
 .entry-message {

@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const roomNameValue = document.getElementById("room-name-value");
   const nicknameDisplay = document.getElementById("nickname-display");
   roomNameValue.textContent = `Sala: ${roomName}`;
-  nicknameDisplay.textContent = `Seu Nickname: ${nickname}`;
+  nicknameDisplay.textContent = `Você está conectado como: ${nickname}`;
 
   const newMessageSound = new Audio("../sounds/notification.mp3");
 
