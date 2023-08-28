@@ -3,6 +3,10 @@ body {
   }
   
   #chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 70vh;
+    overflow-y: auto;
     max-width: 600px;
     margin: 0 auto;
     padding: 20px;
@@ -10,10 +14,15 @@ body {
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
+
+  #components-align {
+    justify-content:baseline
+  }
   
   #messages {
-    max-height: 400px;
-    overflow-y: scroll;
+    flex-grow: 1;
+    max-height: 800px;
+    overflow-y: auto;
     border-bottom: 1px solid #ccc;
     margin-bottom: 10px;
     padding-bottom: 10px;
@@ -27,6 +36,7 @@ body {
   #message-input {
     flex-grow: 1;
     padding: 5px;
+    margin-right: 10px;
   }
   
   #send-button {
@@ -35,5 +45,25 @@ body {
     border: none;
     padding: 5px 10px;
     cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    
   }
   
+  #send-button:hover {
+    background-color: #0056b3;
+    color: #eef0f3;
+  }
+  
+  
+  #header {
+    background-color: #797676;
+    color: #fff;
+    text-align: center;
+    padding: 2px 0; 
+    margin-bottom: 2px; 
+  }
+  
+
+#nickname-display {
+  margin-top: 10px; 
+}

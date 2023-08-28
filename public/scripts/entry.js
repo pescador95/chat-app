@@ -3,4 +3,7 @@ document.getElementById("enter-button").addEventListener("click", function () {
   const nickname = document.getElementById("nickname").value;
 
   window.location.href = `/chat?room=${roomName}&nickname=${nickname}`;
+
+  const roomNameValue = document.getElementById("room-name-value");
+  roomNameValue.textContent = `Sala: ${roomName}`;
 });
