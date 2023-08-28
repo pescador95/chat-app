@@ -67,3 +67,10 @@ body {
 #nickname-display {
   margin-top: 10px; 
 }
+
+.entry-message {
+  font-style: italic;
+  color: #999;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: small;
+}

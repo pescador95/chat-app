@@ -11,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const roomNameValue = document.getElementById("room-name-value");
   const nicknameDisplay = document.getElementById("nickname-display");
   roomNameValue.textContent = `Sala: ${roomName}`;
-
   nicknameDisplay.textContent = `Seu Nickname: ${nickname}`;
 
   function scrollToBottom() {
@@ -33,11 +32,40 @@ document.addEventListener("DOMContentLoaded", () => {
     scrollToBottom();
   }
 
+  function addUserExitMessage(exitMessage) {
+    const exitMessageElement = document.createElement("div");
+    exitMessageElement.classList.add("exit-message");
+    exitMessageElement.innerHTML = exitMessage;
+    messagesContainer.appendChild(exitMessageElement);
+
+    scrollToBottom();
+  }
+
+  socket.emit("joinRoom", roomName, nickname);
+
+  socket.on("userEntered", (entryMessage) => {
+    const entryMessageElement = document.createElement("div");
+    entryMessageElement.classList.add("entry-message");
+    entryMessageElement.innerHTML = entryMessage;
+    messagesContainer.appendChild(entryMessageElement);
+
+    scrollToBottom();
+  });
+
+  socket.on("userExited", (exitMessage) => {
+    const exitMessageElement = document.createElement("div");
+    exitMessageElement.classList.add("entry-message");
+    exitMessageElement.innerHTML = exitMessage;
+    messagesContainer.appendChild(exitMessageElement);
+
+    scrollToBottom();
+  });
+
   messageInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
       const message = messageInput.value.trim();
       if (message && nickname) {
-        socket.emit("chat message", { nickname, message });
+        socket.emit("chat message", { nickname, message, room: roomName });
         messageInput.value = "";
       }
     }
@@ -46,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
   sendButton.addEventListener("click", () => {
     const message = messageInput.value;
     if (message && nickname) {
-      socket.emit("chat message", { nickname, message });
+      socket.emit("chat message", { nickname, message, room: roomName });
       messageInput.value = "";
     }
   });
