@@ -1,7 +1,7 @@
 const express = require("express");
 const http = require("http");
 const socketIo = require("socket.io");
-
+const ngrok = require("ngrok");
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
@@ -34,4 +34,13 @@ io.on("connection", (socket) => {
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
+
+  ngrok
+    .connect(3000)
+    .then((url) => {
+      console.log("Túnel ngrok disponível em:", url);
+    })
+    .catch((err) => {
+      console.error("Erro ao iniciar o túnel ngrok:", err);
+    });
 });
