@@ -13,6 +13,24 @@ document.addEventListener("DOMContentLoaded", () => {
   roomNameValue.textContent = `Sala: ${roomName}`;
   nicknameDisplay.textContent = `Seu Nickname: ${nickname}`;
 
+  const newMessageSound = new Audio("../sounds/notification.mp3");
+
+  const userJoin = new Audio("../sounds/login.mp3");
+
+  const userLeft = new Audio("../sounds/logout.mp3");
+
+  function playNewMessageSound() {
+    newMessageSound.play();
+  }
+
+  function playLoginSound() {
+    userJoin.play();
+  }
+
+  function playLogoutSound() {
+    userLeft.play();
+  }
+
   function scrollToBottom() {
     messagesContainer.scrollTop = messagesContainer.scrollHeight;
   }
@@ -48,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
     entryMessageElement.classList.add("entry-message");
     entryMessageElement.innerHTML = entryMessage;
     messagesContainer.appendChild(entryMessageElement);
-
+    playLoginSound();
     scrollToBottom();
   });
 
@@ -57,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
     exitMessageElement.classList.add("entry-message");
     exitMessageElement.innerHTML = exitMessage;
     messagesContainer.appendChild(exitMessageElement);
-
+    playLogoutSound();
     scrollToBottom();
   });
 
@@ -81,5 +99,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   socket.on("chat message", (msg) => {
     addMessage(msg);
+    playNewMessageSound();
   });
 });
