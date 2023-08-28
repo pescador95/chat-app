@@ -14,6 +14,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
   nicknameDisplay.textContent = `Seu Nickname: ${nickname}`;
 
+  function scrollToBottom() {
+    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+  }
+
+  function addMessage(message) {
+    const messageElement = document.createElement("div");
+    messageElement.classList.add("message");
+    const timestamp = new Date().toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+    messageElement.textContent = `${message.nickname} (${timestamp}): ${message.message}`;
+    messagesContainer.appendChild(messageElement);
+
+    scrollToBottom();
+  }
+
   messageInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
       const message = messageInput.value.trim();
@@ -33,13 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   socket.on("chat message", (msg) => {
-    const messageElement = document.createElement("div");
-    messageElement.classList.add("message");
-    const timestamp = new Date().toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-    messageElement.textContent = `${msg.nickname} (${timestamp}): ${msg.message}`;
-    messagesContainer.appendChild(messageElement);
+    addMessage(msg);
   });
 });
