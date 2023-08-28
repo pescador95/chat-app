@@ -25,7 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
       hour: "2-digit",
       minute: "2-digit",
     });
-    messageElement.textContent = `${message.nickname} (${timestamp}): ${message.message}`;
+    const nicknameWithBold = `<strong>${message.nickname}</strong>`;
+
+    messageElement.innerHTML = `${nicknameWithBold} (${timestamp}): ${message.message}`;
     messagesContainer.appendChild(messageElement);
 
     scrollToBottom();
