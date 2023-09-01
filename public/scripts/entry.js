@@ -7,9 +7,11 @@ function redirectToChat() {
   const roomNameValue = document.getElementById("room-name-value");
   roomNameValue.textContent = `Sala: ${roomName}`;
 }
+
 document
   .getElementById("enter-button")
   .addEventListener("click", redirectToChat);
+
 document
   .getElementById("nickname")
   .addEventListener("keydown", function (event) {
@@ -17,6 +19,7 @@ document
       redirectToChat();
     }
   });
+
 document
   .getElementById("room-name")
   .addEventListener("keydown", function (event) {
