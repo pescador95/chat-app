@@ -36,48 +36,55 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function addMessage(message) {
+  
     const messageElement = document.createElement("div");
     messageElement.classList.add("message");
+    
     const timestamp = new Date().toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
     });
-    const nicknameWithBold = `<strong>${message.nickname}</strong>`;
+    
+  const nicknameElement = document.createElement("strong");
+  nicknameElement.textContent = message.nickname;
 
-    messageElement.innerHTML = `${nicknameWithBold} (${timestamp}): ${message.message}`;
-    messagesContainer.appendChild(messageElement);
+const textNode = document.createTextNode(` (${timestamp}): ${message.message}`);
 
-    scrollToBottom();
-  }
-
-  function addUserExitMessage(exitMessage) {
-    const exitMessageElement = document.createElement("div");
-    exitMessageElement.classList.add("exit-message");
-    exitMessageElement.innerHTML = exitMessage;
-    messagesContainer.appendChild(exitMessageElement);
+  messageElement.appendChild(nicknameElement);
+  messageElement.appendChild(textNode);
+  messagesContainer.appendChild(messageElement);
 
     scrollToBottom();
   }
+
+function addUserExitMessage(exitMessage) {
+  const exitMessageElement = document.createElement("div");
+  exitMessageElement.classList.add("exit-message");
+  exitMessageElement.textContent = exitMessage;
+  messagesContainer.appendChild(exitMessageElement);
+
+  scrollToBottom();
+}
 
   socket.emit("joinRoom", roomName, nickname);
+  
+socket.on("userEntered", (entryMessage) => {
+  const entryMessageElement = document.createElement("div");
+  entryMessageElement.classList.add("entry-message");
+  entryMessageElement.textContent = entryMessage;
+  messagesContainer.appendChild(entryMessageElement);
+  playLoginSound();
+  scrollToBottom();
+});
 
-  socket.on("userEntered", (entryMessage) => {
-    const entryMessageElement = document.createElement("div");
-    entryMessageElement.classList.add("entry-message");
-    entryMessageElement.innerHTML = entryMessage;
-    messagesContainer.appendChild(entryMessageElement);
-    playLoginSound();
-    scrollToBottom();
-  });
-
-  socket.on("userExited", (exitMessage) => {
-    const exitMessageElement = document.createElement("div");
-    exitMessageElement.classList.add("entry-message");
-    exitMessageElement.innerHTML = exitMessage;
-    messagesContainer.appendChild(exitMessageElement);
-    playLogoutSound();
-    scrollToBottom();
-  });
+socket.on("userExited", (exitMessage) => {
+  const exitMessageElement = document.createElement("div");
+  exitMessageElement.classList.add("entry-message");
+  exitMessageElement.textContent = exitMessage;
+  messagesContainer.appendChild(exitMessageElement);
+  playLogoutSound();
+  scrollToBottom();
+});
 
   messageInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {

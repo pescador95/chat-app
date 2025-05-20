@@ -6,6 +6,9 @@ const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
+const helmet = require("helmet");
+
+app.use(helmet());
 app.use(express.static(__dirname + "/public"));
 
 app.get("/", (req, res) => {
