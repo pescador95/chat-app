@@ -23,7 +23,7 @@
   "dependencies": {
     "chat-app": "file:",
     "dotenv": "^16.3.1",
-    "express": "^4.18.2",
+    "express": "^4.22.1",
     "express-session": "^1.19.0",
     "helmet": "^8.1.0",
     "mongoose": "^7.4.5",
